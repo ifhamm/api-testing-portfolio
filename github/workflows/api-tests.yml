@@ -1,0 +1,40 @@
+name: API Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        
+    - name: Install Newman
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-htmlextra
+        
+    - name: Run API Tests
+      run: |
+        newman run "./collection/ReqRes.postman_collection.json" \
+        -e "./collection/ReqRes.postman_environment.json" \
+        -r cli,htmlextra \
+        --reporter-htmlextra-export "./reports/report.html"
+        
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: test-results
+        path: ./reports/report.html
