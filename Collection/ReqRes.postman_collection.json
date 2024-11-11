@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "be577d59-f018-415e-ad65-345e7def9d4a",
+		"name": "ReqRes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37860963"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Respone has authentication token\", function () {\r",
+									"    var responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an('object');\r",
+									"    pm.expect(responseBody.token).to.exist.and.to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a(\"string\").and.to.not.be.empty;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						},
+						"description": "### Register User\n\nThis endpoint allows you to register a new user.\n\n#### Request Body\n\n- email (string, required): The email of the user to be registered.\n    \n- password (string, required): The password for the user account.\n    \n\n#### Response\n\nThe response for this request is a JSON schema representing the user registration details."
+					},
+					"response": []
+				},
+				{
+					"name": "Register User (Unsecsessful)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Fixed syntax by checking the Content-Type before parsing JSON\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message for missing password\", function () {\r",
+									"    if (pm.response.headers.get(\"Content-Type\") === \"application/json\") {\r",
+									"        const jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData).to.have.property(\"error\");\r",
+									"        pm.expect(jsonData.error).to.include(\"Missing email or username\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has correct error structure\", function () {\r",
+									"    if (pm.response.headers.get(\"Content-Type\") === \"application/json\") {\r",
+									"        const jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData).to.have.property(\"error\");\r",
+									"        pm.expect(jsonData.error).to.be.a(\"string\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is not empty on error\", function () {\r",
+									"    if (pm.response.headers.get(\"Content-Type\") === \"application/json\") {\r",
+									"        pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						},
+						"description": "### Register User\n\nThis endpoint allows you to register a new user.\n\n#### Request Body\n\n- `email` (string, required): The email address of the user to be registered.\n    \n\n#### Response\n\nThe response will include the user ID and a token upon successful registration."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Respone code is 200 for sucsessful login\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is presense in response\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json().token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is containt user detail\", function () {\r",
+									"     var responseBody = pm.response.json();\r",
+									"     pm.expect(responseBody).to.be.an('object');\r",
+									"     pm.expect(responseBody.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "### Login API\n\nThis API endpoint is used to authenticate a user by providing their email and password.\n\n#### Request Body\n\n- `email` (string) - The email of the user.\n    \n- `password` (string) - The password for the user.\n    \n\n#### Response\n\nThe response will include the authentication token if the provided credentials are valid."
+					},
+					"response": []
+				},
+				{
+					"name": "Login User (Unsecsessful)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response code is 400 for invalid login\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message for invalid login\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"error\").that.includes(\"Missing email or username\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has correct error structure\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"error\");\r",
+									"    pm.expect(jsonData.error).to.be.a(\"string\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/login",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "### Login API\n\nThis API endpoint is used to authenticate a user by providing the login credentials.\n\n#### Request Body\n\n- `password` (string) - The password of the user.\n    \n\n#### Response\n\nThe response will include the authentication token upon successful authentication."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resource",
+			"item": [
+				{
+					"name": "List Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response code is 200\", function () {\r",
+									"     pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response is array\", function () {\r",
+									"     var responseBody = pm.response.json();\r",
+									"     pm.expect(responseBody).to.be.an('object');\r",
+									"     pm.expect(responseBody.data).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each user has correct properties\", function () {\r",
+									"     var responseJSON = pm.response.json();\r",
+									"     pm.expect(responseJSON).to.be.an('object');\r",
+									"     \r",
+									"     responseJSON.data.forEach((user) => {\r",
+									"            pm.expect(user).to.have.property('id');\r",
+									"            pm.expect(user).to.have.property('name');\r",
+									"            pm.expect(user).to.have.property('year');\r",
+									"            pm.expect(user).to.have.property('color');\r",
+									"            pm.expect(user).to.have.property('pantone_value');\r",
+									"     });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has pagination\", function () {\r",
+									"    var responseJSON = pm.response.json();\r",
+									"    pm.expect(responseJSON).to.be.an('object');\r",
+									"    pm.expect(responseJSON).to.have.property('page');\r",
+									"    pm.expect(responseJSON).to.have.property('per_page');\r",
+									"    pm.expect(responseJSON).to.have.property('total');\r",
+									"    pm.expect(responseJSON).to.have.property('total_pages');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/unknown",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"unknown"
+							]
+						},
+						"description": "This endpoint sends an HTTP GET request to retrieve information about a list of unknown resources from the specified API. The response of this request can be documented as a JSON schema to provide a clear structure and definition of the response data."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
