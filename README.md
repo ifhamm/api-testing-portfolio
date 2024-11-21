@@ -1,21 +1,22 @@
 # API Testing Portfolio
 
 ## 📑 Overview
-API Testing portfolio menggunakan Postman dan Newman untuk ReqRes API (https://reqres.in)
+This API Testing portfolio utilizes Postman and Newman for testing the ReqRes API (https://reqres.in)
 
 ## 🚀 Features Tested
-- User Management
-  - Get Users List
-  - Get Single User
-  - Create User
-  - Update User
-  - Delete User
-- Authentication
-  - Login
-  - Register
-  - Register User
-  - Login User
-  - Login User (Unsuccessful)
+### User Management
+- Get Users List
+- Get Single User
+- Create User
+- Update User
+- Delete User
+
+### Authentication
+- Login
+- Register
+- Register User
+- Login User
+- Login User (Unsuccessful)
 
 ## 🛠️ Tools & Tech Stack
 - Postman v10.x
@@ -25,39 +26,37 @@ API Testing portfolio menggunakan Postman dan Newman untuk ReqRes API (https://r
 - Node.js
 
 ## 💻 Prerequisites (Windows)
-1. Install Node.js
-   - Download dari https://nodejs.org/
-   - Install dengan opsi default
-   - Buka Command Prompt, ketik: `node --version`
 
-2. Install Newman
-   ```cmd
-   npm install -g newman
-   npm install -g newman-reporter-htmlextra
-   ```
+### 1. Install Node.js
+- Download from https://nodejs.org/
+- Install with default options
+- Open Command Prompt, verify with: `node --version`
 
-3. Install Git for Windows
-   - Download dari https://git-scm.com/download/windows
-   - Install dengan opsi default
+### 2. Install Newman
+```bash
+npm install -g newman
+npm install -g newman-reporter-htmlextra
+```
+
+### 3. Install Git for Windows
+- Download from https://git-scm.com/download/windows
+- Install with default options
 
 ## 🚀 How to Run (Windows)
-1. Clone repository
-   ```cmd
-   git clone https://github.com/[username]/api-testing-portfolio.git
-   cd api-testing-portfolio
-   ```
+1. Clone the repository
+```bash
+git clone https://github.com/[username]/api-testing-portfolio.git
+cd api-testing-portfolio
+```
 
 2. Run tests
-   ```cmd
-   newman run collection/ReqRes.postman_collection.json -e collection/ReqRes.postman_environment.json -r htmlextra
-   ```
+```bash
+newman run collection/ReqRes.postman_collection.json -e collection/ReqRes.postman_environment.json -r htmlextra
+```
 
 ## 📈 Test Reports
-- Reports akan dibuat di folder `newman/` setelah test dijalankan
-- Buka file HTML di browser untuk melihat hasil detail
-
-## 📱 Screenshots
-
+- Reports are generated in the `newman/` folder after test execution
+- Open HTML files in a browser to view detailed results
 
 # API Testing Portfolio - Detailed Test Cases
 
