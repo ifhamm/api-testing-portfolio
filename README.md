@@ -13,7 +13,7 @@ This API Testing portfolio utilizes Postman and Newman for testing the ReqRes AP
 
 ### Authentication
 - Login
-- Register
+- Register User (Unsuccessful)
 - Register User
 - Login User
 - Login User (Unsuccessful)
