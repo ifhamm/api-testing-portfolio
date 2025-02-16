@@ -12,7 +12,6 @@ This API Testing portfolio utilizes Postman and Newman for testing the ReqRes AP
 - Delete User
 
 ### Authentication
-- Login
 - Register User (Unsuccessful)
 - Register User
 - Login User
