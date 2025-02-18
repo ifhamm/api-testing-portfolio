@@ -44,7 +44,7 @@ npm install -g newman-reporter-htmlextra
 ## 🚀 How to Run (Windows)
 1. Clone the repository
 ```bash
-git clone https://github.com/[username]/api-testing-portfolio.git
+git clone https://github.com/ifhamm/api-testing-portfolio.git
 cd api-testing-portfolio
 ```
 
